@@ -76,7 +76,6 @@ class Robot
 
     public function turn($direction)
     {
-
         $this->setDirection($direction);
         /*ignore*/
     }

@@ -32,10 +32,7 @@ class Board
         {
             for($cols= 0; $cols<$this->cols; $cols++)
             {
-                if($rows==$defaultX && $cols==$defaultY)
-                    $this->board[$rows][$cols] = ' R ';
-                else
-                    $this->board[$rows][$cols] = ' - ';
+                $this->board[$rows][$cols] = ' - ';
             }
         }
     }

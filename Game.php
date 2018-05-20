@@ -14,6 +14,8 @@ class Game
 
     private $board;
     private $robot;
+    private $gameInit;
+
 
 
     /**
@@ -26,7 +28,17 @@ class Game
 
         $this->board= $board;
         $this->robot = $robot;
+        $this->game = false;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getGameInit()
+    {
+        return $this->gameInit;
+    }
+
 
     public function moveRobot()
     {
@@ -34,9 +46,15 @@ class Game
         $result = $this->robot->getNextPos();
         if($result==false)
         {
-            echo "error cannot move";
-            return;
+            echo "Error cannot move.\n";
+            return false;
         }
+        if(!is_array($result) || count($result)!=2)
+        {
+            echo "Error cannot move.\n";
+            return false;
+        }
+
         list($newX, $newY) = $result;
         if($this->board->isValidPos($newX,$newY))
         {
@@ -44,17 +62,8 @@ class Game
             $this->board->updateBoard($this->robot->getX(), $this->robot->getY(),$newX,$newY);
             $this->robot->move();
         }
-        else
-        {
-            echo "not valid in game";
-        }
+        return true;
     }
-
-    public function setRobotInBoard($x,$y)
-    {
-        $this->board->setRobot($x,$y);
-    }
-
 
     public function getBoard()
     {
@@ -66,11 +75,17 @@ class Game
         $this->robot->getReport();
     }
 
+    /*change direction of the robot*/
     public function turnRobot($direct)
     {
         $this->robot->turn($direct);
     }
 
+
+    public function commands($command)
+    {
+
+    }
 
 
 
