@@ -23,7 +23,6 @@ class Board
         $this->rows = $rows;
         $this->cols = $cols;
         $this->initBoard();
-        $this->printBoard();
     }
 
     private function initBoard($defaultX = 0, $defaultY = 0)
@@ -32,34 +31,24 @@ class Board
         {
             for($cols= 0; $cols<$this->cols; $cols++)
             {
-                if($rows==$defaultX && $cols==$defaultY)
-                    $this->board[$rows][$cols] = ' R ';
-                else
-                    $this->board[$rows][$cols] = ' - ';
+                $this->board[$rows][$cols] = ' - ';
             }
         }
     }
 
-    public function updateBoard($oldX, $oldY, $newX,$newY)
+
+    public function updateCell($x, $y, $val)
     {
-        if($this->isValidPos($oldX,$oldY) && $this->isValidPos($newX,$newY))
+        if($this->isValidPos($x,$y))
         {
-            /*tansposing*/
-            $this->board[$oldY][$oldX] = " - ";
-            $this->board[$newY][$newX] = " R ";
-            $this->printBoard();
+            /*transpose*/
+            $this->board[$y][$x] = " $val ";
+            return true;
         }
-        else
-            echo "not valid";
 
         return false;
     }
 
-    public function unsetOldPos($oldX, $oldY)
-    {
-        if($this->isValidPos($oldX,$oldY))
-            $this->board[$oldX][$oldY] = " - ";
-    }
 
     public function printBoard()
     {
@@ -78,15 +67,14 @@ class Board
     public function isValidPos($x, $y)
     {
 
-        echo "\n$x = $x and y = $y n";
         if($x<0 || $x>=$this->rows )
         {
-            echo "exceed the valid x positions $x, $y";
+            echo "\n Invalid X coordinate X = $x \n";
             return false;
         }
         if($y<0 || $y>=$this->cols)
         {
-            echo "exceed the valid y positions";
+            echo "\n Invalid Y coordinate Y = $y \n";
             return false;
         }
         return true;
