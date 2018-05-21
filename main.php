@@ -14,6 +14,16 @@ $game = new Game();
 $commands = ["PLACE 2,4,north",'move', 'left', 'right', 'move','right', 'move'];
 
 
+$fh = fopen("commands.txt",'r') or die("Error! --- could not open file");
+
+while(!feof($fh))
+{
+    $line = trim(fgets($fh));
+    if($line=='')
+        continue; /*empty line*/
+    $game->evalCommand($line);
+}
+return;
 
 foreach ($commands as $command)
 {

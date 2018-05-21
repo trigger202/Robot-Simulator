@@ -93,9 +93,7 @@ class Game
             $this->getGameReport();
             return;
         }
-
         exit("\nError command");
-
     }
 
 

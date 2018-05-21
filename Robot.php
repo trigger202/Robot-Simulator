@@ -131,7 +131,6 @@ class Robot
 
     public function getReport()
     {
-        echo "reportinging\n";
         $directionName = $this->directionTranslator[$this->direction];
         echo "\nOutput:  $this->x, $this->y, $directionName \n";
     }
