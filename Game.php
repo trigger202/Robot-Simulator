@@ -14,6 +14,8 @@ class Game
 
     private $board;
     private $robot;
+    private $gameInit;
+
 
     /**
      * Game constructor.
@@ -35,6 +37,7 @@ class Game
             echo "\n-- error cannot move --\n";
             return false;
         }
+
         list($newX, $newY) = $result;
         if($this->board->isValidPos($newX,$newY))
         {
@@ -116,6 +119,7 @@ class Game
         return false;
     }
 
+    /*change direction of the robot*/
     public function turnRobot($direct)
     {
         $this->robot->turn($direct);
