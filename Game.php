@@ -14,8 +14,6 @@ class Game
 
     private $board;
     private $robot;
-    private $gameInit;
-
 
     /**
      * Game constructor.
@@ -146,7 +144,7 @@ class Game
              {
                  exit("\n --- invalid starting positions ---\n\n");
              }
-
+            $this->board->initBoard(); /*reinitalize board*/
              $isPlaced = $this->board->updateCell($xcord,$ycord,'R');
              if($isPlaced)
              {

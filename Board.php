@@ -25,7 +25,7 @@ class Board
         $this->initBoard();
     }
 
-    private function initBoard($defaultX = 0, $defaultY = 0)
+    public function initBoard()
     {
         for($rows= 0; $rows<$this->rows; $rows++)
         {
