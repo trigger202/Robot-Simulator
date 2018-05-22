@@ -10,9 +10,9 @@ class Robot
 {
     private $x;
     private $y;
-    private $direction;
-    private $directionTranslator = array( 0=>"North", 2=>"South", 3=>"West", 1=>"East");
-    public $isOnTable ;
+    private $degrees;
+    private  $direction;
+    private $isOnTable ;
 
 
     /**
@@ -25,10 +25,15 @@ class Robot
     {
         $this->x = $x;
         $this->y = $y;
-        $this->direction = $this->setDirectionFromWordToNumber($direction);
+        $this->direction = $direction;
+        $this->degrees   = $direction->getDirection();
         $this->isOnTable = false;
     }
 
+    public function getDegree()
+    {
+        return $this->degrees;
+    }
 
     /**
      * @return mixed
@@ -46,24 +51,30 @@ class Robot
         return $this->y;
     }
 
-    public function move()
+    public function moveForward()
     {
-        if($this->direction==0) /*north*/
+        if($this->degrees==0) /*north*/
             $this->y--;
-        if($this->direction==2)  /*South*/
+        if($this->degrees==2)  /*South*/
             $this->y++;
-        if($this->direction==3)  /*West*/
+        if($this->degrees==3)  /*West*/
             $this->x--;
-        if($this->direction==1)  /*East*/
+        if($this->degrees==1)  /*East*/
             $this->x++;
     }
 
-    public function isValidDirection($direction)
+    public function setIsOnTable($val)
     {
-        if(isset($this->$directionTranslator[$direction]))
-            return true;
-        return false;
+        $this->isOnTable = $val;
     }
+    /**
+     * @return bool
+     */
+    public function isOnTable()
+    {
+        return $this->isOnTable;
+    }
+
 
 
     /**
@@ -72,13 +83,13 @@ class Robot
      */
     public function getNextPos()
     {
-        if($this->direction==0)
+        if($this->degrees==0)
             return array($this->x, $this->y-1);
-        if($this->direction==2)
+        if($this->degrees==2)
             return array($this->x, $this->y+1);
-        if($this->direction==3)
+        if($this->degrees==3)
             return array($this->x-1, $this->y);
-        if($this->direction==1)
+        if($this->degrees==1)
             return array($this->x+1, $this->y);
 
         return false;
@@ -86,53 +97,28 @@ class Robot
 
     public function turn($direction)
     {
-        echo "\n\n==========NEW DIRECTION=====================\n\n";
-
         if($this->isOnTable==false)
+        {
+            echo "not going far";
             return false;
+        }
 
         $direction = strtolower($direction);
-        $directCount = count($this->directionTranslator);
+        $directCount = $this->direction->getTotalDirectionCount();
 
         if(strtolower($direction)=='left')
-            $this->direction= (($this->direction-1)+$directCount)%$directCount;
+            $this->degrees = (($this->degrees-1)+$directCount)%$directCount;
         if(strtolower($direction)=='right')
-            $this->direction = (($this->direction+1)+$directCount)%$directCount;
-
-        return true;
+            $this->degrees = (($this->degrees+1)+$directCount)%$directCount;
     }
 
-    /*given direction in word convert to number e.g north=>0*/
-    private function setDirectionFromWordToNumber($word)
-    {
-        $word = strtolower($word);
-        $number = -1;
-        if($word=='north')
-            $number = 0;
-        if($word=='south')
-                $number = 2;
-        if($word=='east')
-            $number = 1;
-        if($word=='west')
-            $number = 3;
 
-        if($number==-1)
-            exit('invalid direction '.$number);
-        return $number;
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getDirection()
-    {
-        return $this->direction;
-    }
+
 
     public function getReport()
     {
-        $directionName = $this->directionTranslator[$this->direction];
-        echo "\nOutput:  $this->x, $this->y, $directionName \n";
+        echo "\nOutput:  $this->x, $this->y, ".$this->direction->getDirectionName($this->degrees)." \n";
     }
 
 

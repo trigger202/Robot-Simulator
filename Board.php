@@ -61,7 +61,10 @@ class Board
             }
             echo "| \n";
         }
+
+        echo "\nFacing: 0 = North | 2 = South | 3 West|  1 East\n";
     }
+
 
 
     public function isValidPos($x, $y)

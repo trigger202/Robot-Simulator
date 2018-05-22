@@ -42,16 +42,12 @@ class Game
             /*set this cell to null*/
             $this->board->updateCell($this->robot->getX(), $this->robot->getY(),'-');
             /* set this cell to the robot*/
-            $this->board->updateCell($newX,$newY,'R');
-            $this->robot->move();
+            $this->board->updateCell($newX,$newY,$this->robot->getDegree());
+            $this->robot->moveForward();
             $this->getBoard();
             return true;
         }
-        else
-        {
-            echo "not valid in game";
-            return false;
-        }
+        return false;
     }
 
 
@@ -82,7 +78,6 @@ class Game
         if(strpos($commandArgs,'move')!==false)
         {
             $this->moveRobot();
-
             return;
         }
 
@@ -91,7 +86,7 @@ class Game
             $this->getGameReport();
             return;
         }
-        exit("\nError command");
+        exit("\nincorrect command");
     }
 
 
@@ -102,15 +97,22 @@ class Game
 
     public function getGameReport()
     {
-        if($this->hasPlacedRobot())
-            $this->robot->getReport();
-        else
+        if(!$this->hasPlacedRobot())
+        {
             echo "\nMake sure robot is placed first\n";
+            return;
+        }
+
+        else
+        {
+            $this->robot->getReport();
+
+        }
     }
 
     public function hasPlacedRobot()
     {
-        if($this->robot!=null && $this->robot->isOnTable)
+        if($this->robot!=null && $this->robot->isOnTable())
             return true;
         return false;
     }
@@ -135,24 +137,36 @@ class Game
              $xcord = substr($argList[0],-1,1);
              $ycord = $argList[1];
              $direction = $argList[2];
+             $directionObject = new Directions();
+
+             if(!$directionObject->isValidDirection($direction))
+             {
+                 echo "\n --- invalid direction start point ---\n\n";
+                 return false;
+             }
+             $directionObject->setDirectionFromWordToNumber($direction);
+
              if(!is_numeric($xcord) || !is_numeric($ycord))
              {
-                 exit("\n --- invalid starting positions ---\n\n");
+                 echo "\n --- invalid starting positions ---\n\n";
+                 return false;
              }
 
              if(!$this->board->isValidPos($xcord,$ycord))
              {
-                 exit("\n --- invalid starting positions ---\n\n");
+                 echo "\n --- invalid starting positions ---\n\n";
+                 return false;
              }
-            $this->board->initBoard(); /*reinitalize board*/
-             $isPlaced = $this->board->updateCell($xcord,$ycord,'R');
-             if($isPlaced)
-             {
-                 echo "+++++++++++++++++++Robot is successfully placed++++++++++++++++++\n\n";
-                 $this->robot= new Robot($xcord,$ycord,$direction);
-                 $this->robot->isOnTable = true;
-                 $this->getBoard();
-             }
+
+
+
+            echo "+++++++++++++++++++Robot is successfully placed++++++++++++++++++\n\n";
+            $this->robot= new Robot($xcord,$ycord,$directionObject);
+             $this->board->initBoard(); /*reinitalize board*/
+             $this->board->updateCell($xcord,$ycord,$directionObject->getDirection());
+            $this->robot->setIsOnTable(true);
+            $this->getBoard();
+
          }
          return false;
 
