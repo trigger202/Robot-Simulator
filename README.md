@@ -1,4 +1,5 @@
 **TOY ROBOT SIMULATOR**
+=====================
 
 Toy Robot Simulator
 The application is a simulation of a toy robot moving on a square tabletop, of dimensions 5 units x 5 units. - There are no other obstructions on the table surface. - The robot is free to roam around the surface of the table, but must be prevented from falling to destruction. Any movement that would result in the robot falling from the table must be prevented, however further valid movement commands must still be allowed.
@@ -6,8 +7,9 @@ The application is a simulation of a toy robot moving on a square tabletop, of d
 
 
 ***Design Decisions***
+=======================
 
-The only main change, is the start point of the robot. 
+The only main change is the start point of the robot. 
 
 0,0 is considered North West (top left corner)
 
@@ -16,6 +18,7 @@ The only main change, is the start point of the robot.
 
 
 ***Getting Started***
+=====================
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 -- If you want to run the script against your own set of instruction, add them to the commands.txt inside the project directory
@@ -23,6 +26,7 @@ These instructions will get you a copy of the project up and running on your loc
  note - each command must start with a new line
 
 ***Prerequisites***
+======================
 
 We will use the command line to execute the script so you will need:
 
@@ -34,6 +38,7 @@ We will use the command line to execute the script so you will need:
 
 
 ***Running the tests***
+======================
 
 Navigate to your project folder and issue the following command to execute the script.
 
